@@ -1,7 +1,22 @@
-import boto3
+#!/usr/bin/python
+# -*- coding: utf8 -*-
+
+"""Webotron: Deploy websites with aws
+
+Webotron automated the process of deploying static websites to AWS
+  - Configure AWS S3 buckets
+    - Create them
+    - Set them up for static website hosting
+    - Deploy local files to them
+  - Configure DNS with AWS Route 53
+  - Configure a Content Delivery Network and SSL with AWS CloudFront
+"""
+
 import sys
 import click
-
+from pathlib import Path
+import mimetypes
+import boto3
 from botocore.exceptions import ClientError
 
 session = boto3.Session(profile_name='personal')
@@ -9,26 +24,26 @@ s3 = session.resource('s3')
 
 @click.group()
 def cli():
-    "Webotron deplys websites to AWS"
+    """Webotron deplys websites to AWS"""
     pass
 
 @cli.command('list-buckets')
 def list_buckets():
-    "List all s3 buckets"
+    """List all s3 buckets"""
     for bucket in s3.buckets.all():
         print(bucket)
 
 @cli.command('list-bucket-objects')
 @click.argument('bucket')
 def list_bucket_objects(bucket):
-    "List objects in a S3 bucket"
+    """List objects in a S3 bucket"""
     for object in s3.Bucket(bucket).objects.all():
         print(object)
 
 @cli.command('setup-bucket')
 @click.argument('bucket')
 def setup_bucket(bucket):
-    "Create and configure S3 bucket"
+    """Create and configure S3 bucket"""
     s3_bucket = None
     try:
         s3_bucket = s3.create_bucket(Bucket=bucket)
@@ -65,6 +80,32 @@ def setup_bucket(bucket):
         }
     })
     return
+
+def upload_file(s3_bucket, path, key):
+    content_type = mimetypes.guess_type(key)[0] or 'text/plain'
+
+    s3_bucket.upload_file(
+        path,
+        key,
+        ExtraArgs={
+            'ContentType': 'text/html'
+        })
+
+@cli.command('sync')
+@click.argument('pathname', type=click.Path(exists=True))
+@click.argument('bucket')
+def sync(pathname, bucket):
+    "Sync contents of PATHNAME to BUCKET"
+    s3_bucket = s3.Bucket(bucket)
+
+    root = Path(pathname).expanduser().resolve()
+
+    def handle_directory(target):
+        for p in target.iterdir():
+            if p.is_dir(): handle_directory(p)
+            if p.is_file(): upload_file(s3_bucket, str(p), str(p.relative_to(root)))
+
+    handle_directory(root)
 
 if __name__ == '__main__':
     cli()
