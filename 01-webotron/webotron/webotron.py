@@ -53,11 +53,11 @@ def setup_bucket(bucket):
     s3_bucket = None
     try:
         s3_bucket = s3.create_bucket(Bucket=bucket)
-    except ClientError as e:
-        if e.response['Error']['Code'] == "BucketAlreadyOwnedByYou":
+    except ClientError as error:
+        if error.response['Error']['Code'] == "BucketAlreadyOwnedByYou":
             s3_bucket = s3.Bucket(bucket)
         else:
-            raise e
+            raise error
 
     policy = """
     {
@@ -96,7 +96,7 @@ def upload_file(s3_bucket, path, key):
         path,
         key,
         ExtraArgs={
-            'ContentType': 'text/html'
+            'ContentType': content_type
         })
 
 
