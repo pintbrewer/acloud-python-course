@@ -1,3 +1,10 @@
+import boto3
+
+session = boto3.Session(profile_name='personal')
+s3 = session.resource('s3')
+
+
+
 new_bucket = s3.create_bucket(Bucket='guru-ahalfnother-4243', CreateBucketConfiguration={'LocationConstraint': session.region_name})
 
 new_bucket = s3.create_bucket(Bucket='guru-ahalfnother-2222')
