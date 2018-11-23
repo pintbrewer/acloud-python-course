@@ -27,3 +27,4 @@ policy = """
     ...: """ % new_bucket.name
 
     pol.put(Policy=policy)
+
