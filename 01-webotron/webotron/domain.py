@@ -11,6 +11,7 @@ class DomainManager:
         self.client = self.session.client('route53')
 
     def find_hosted_zone(self, domain_name):
+        """Find a hosted zone that exists."""
         paginator = self.client.get_paginator('list_hosted_zones')
         for page in paginator.paginate():
             for zone in page['HostedZones']:
@@ -18,6 +19,7 @@ class DomainManager:
                     return zone
 
     def create_hosted_zone(self, domain_name):
+        """Create a hosted zone from domain name."""
         zone_name = '.'.join(domain_name.split('.')[-2:]) + '.'
         return self.client.create_hosted_zone(
             Name=zone_name,
@@ -25,6 +27,7 @@ class DomainManager:
         )
 
     def create_s3_domain_record(self, zone, domain_name, endpoint):
+        """Create an A record alias to a S3 bucket."""
         return self.client.change_resource_record_sets(
             HostedZoneId=zone['Id'],
             ChangeBatch={
