@@ -3,6 +3,7 @@ import uuid
 
 """Classes for Cloud Front Distributions."""
 
+
 class DistributionManager:
     def __init__(self, session):
         self.session = session

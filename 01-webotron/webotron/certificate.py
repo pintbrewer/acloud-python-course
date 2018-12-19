@@ -8,10 +8,10 @@ class CertificateManager:
         self.client = self.session.client('acm', region_name='us-east-1')
 
     def cert_matches(self, cert_arn, domain_name):
-        cert_details = self.client.describe_certificate(CertificateArn=cert_arn)
+        cert_details = \
+            self.client.describe_certificate(CertificateArn=cert_arn)
         alt_names = cert_details['Certificate']['SubjectAlternativeNames']
         for name in alt_names:
-            #print("Name: " + name)
             if name == domain_name:
                 return True
             if name[0] == '*' and domain_name.endswith(name[1:]):
