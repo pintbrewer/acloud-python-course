@@ -1,4 +1,5 @@
 import boto3
+from pprint import pprint
 
 session = boto3.Session(profile_name='personal')
 s3 = session.resource('s3')

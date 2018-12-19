@@ -47,3 +47,25 @@ class DomainManager:
                 ]
             }
         )
+
+    def create_cf_domain_record(self, zone, domain_name, dist):
+        """Create an A record alias to a CloudFront endpoint"""
+        return self.client.change_resource_record_sets(
+            HostedZoneId=zone['Id'],
+            ChangeBatch={
+                'Comment': 'Created by webotron',
+                'Changes': [{
+                    'Action': 'UPSERT',
+                    'ResourceRecordSet': {
+                        'Name': domain_name,
+                        'Type': 'A',
+                        'AliasTarget': {
+                            'HostedZoneId': 'Z2FDTNDATAQYW2',
+                            'DNSName': dist['DomainName'],
+                            'EvaluateTargetHealth': False
+                        }
+                    }
+                }
+                ]
+            }
+        )
