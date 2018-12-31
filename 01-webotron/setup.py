@@ -1,0 +1,46 @@
+from setuptools import setup
+setup(
+    name='webotron-lee',
+    version='0.1',
+    author='Lee W',
+    author_email='half@ahalfnoter.net',
+    description='Webotron is a tool to deploy static web pages in AWS',
+    packages=['webotron'],
+    url='https://github.com/pintbrewer/acloud-python-course/tree/master/01-webotron',
+    install_requires=[
+        'appnope==0.1.0',
+        'astroid==2.1.0',
+        'backcall==0.1.0',
+        'boto3==1.9.26',
+        'botocore==1.12.30',
+        'Click==7.0',
+        'decorator==4.3.0',
+        'docutils==0.14',
+        'ipython==7.0.1',
+        'ipython-genutils==0.2.0',
+        'isort==4.3.4',
+        'jedi==0.13.1',
+        'jmespath==0.9.3',
+        'lazy-object-proxy==1.3.1',
+        'mccabe==0.6.1',
+        'parso==0.3.1',
+        'pexpect==4.6.0',
+        'pickleshare==0.7.5',
+        'prompt-toolkit==2.0.5',
+        'ptyprocess==0.6.0',
+        'pycodestyle==2.4.0',
+        'Pygments==2.2.0',
+        'python-dateutil==2.7.4',
+        's3transfer==0.1.13',
+        'simplegeneric==0.8.1',
+        'six==1.11.0',
+        'traitlets==4.3.2',
+        'urllib3==1.24',
+        'wcwidth==0.1.7',
+        'wrapt==1.10.11'
+    ],
+    entry_points='''
+        [console_scripts]
+        webotron=webotron.webotron:cli
+    '''
+)
