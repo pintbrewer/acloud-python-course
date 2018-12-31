@@ -13,3 +13,8 @@ Webotron currently ahs the following feaatures
  - setup bucket for website
  - sync directory tree to bucket
  - Set AWS profile with --profile=<profileName>
+ - Setup domain
+ - find a certificate
+ - setup a CDN
+
+
