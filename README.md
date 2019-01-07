@@ -17,4 +17,9 @@ Webotron currently ahs the following feaatures
  - find a certificate
  - setup a CDN
 
+## 02-notifon
 
+Notifon is a program to notify slack users of new EC2 instances
+
+### Features
+No features just yet

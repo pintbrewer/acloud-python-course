@@ -20,7 +20,6 @@ prompt-toolkit==2.0.5
 ptyprocess==0.6.0
 pycodestyle==2.4.0
 Pygments==2.2.0
-pylint==2.2.2
 python-dateutil==2.7.4
 s3transfer==0.1.13
 simplegeneric==0.8.1
