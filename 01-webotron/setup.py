@@ -16,7 +16,7 @@ setup(
         'Click==7.0',
         'decorator==4.3.0',
         'docutils==0.14',
-        'ipython==7.0.1',
+        'ipython==7.16.3',
         'ipython-genutils==0.2.0',
         'isort==4.3.4',
         'jedi==0.13.1',
